@@ -1,28 +1,31 @@
-
 import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import connectDB from './db/connectDB.js'; // Add .js extension
 import Admin from './models/Admin.js'; // Add .js extension
 import Adminsign from './models/AdminSign.js';
 import cors from 'cors';
 import dishesRoutes from './routes/dishes.js'
 import ordersRoutes from './routes/orders.js'
+
 // Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8002;
 
-app.use(cors({
+// CORS Configuration: Allow requests only from your frontend
+const corsOptions = {
   origin: 'http://localhost:5173', // Allow requests from your frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
+// Enable CORS middleware
+app.use(cors(corsOptions));
 
-
-// Middleware
+// Middleware to parse JSON
 app.use(express.json());
 
 // Connect to MongoDB
@@ -33,13 +36,11 @@ connectDB(process.env.MONGO_URI)
     process.exit(1);
   });
 
-   
-
+// Define Routes
 app.use('/api/dishes', dishesRoutes);
 app.use('/api/orders', ordersRoutes);
 
-// Routes
-
+// Admin Signup Route
 app.post('/admin/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -65,7 +66,7 @@ app.post('/admin/signup', async (req, res) => {
   }
 });
 
-// Admin Login with Username and Email
+// Admin Login Route
 app.post('/admin/login', async (req, res) => {
   const { username, email } = req.body; // Accept username and email
 
@@ -91,8 +92,6 @@ app.post('/admin/login', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
-
-
 
 // Default route
 app.get('/', (req, res) => {
