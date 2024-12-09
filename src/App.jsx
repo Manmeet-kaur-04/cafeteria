@@ -4,7 +4,6 @@ import Dishes from "./components/Dishes";
 import { BrowserRouter , Route,Routes } from "react-router-dom";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
-import Show from "./components/Show";
 import Admin from "./user/Admin";
 import User from "./user/User";
 import Orders from "./components/Orders";
@@ -23,7 +22,6 @@ const App = () => {
            <Route path='/' element={<Home/>}></Route>
            <Route path='/cart' element={<Cart/>}></Route>
            <Route path='/dishes' element={<Dishes/>}></Route>
-           <Route path='/show' element={<Show/>}></Route>
            <Route path='/user' element={<User/>}></Route>
            <Route path='/admin1' element={<Admin/>}></Route>
            <Route path='/tables' element={<Tableview/>}></Route>
