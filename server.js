@@ -3,7 +3,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import connectDB from './db/connectDB.js'; // Add .js extension
 import Admin from './models/Admin.js'; // Add .js extension
 import Adminsign from './models/AdminSign.js';
 import cors from 'cors';
